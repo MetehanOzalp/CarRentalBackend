@@ -43,6 +43,9 @@ namespace Business.DependencyResolvers
 
             builder.RegisterType<PaymentManager>().As<IPaymentService>().SingleInstance();
 
+            builder.RegisterType<CreditCardManager>().As<ICreditCardService>().SingleInstance();
+            builder.RegisterType<EfCreditCardDal>().As<ICreditCardDal>().SingleInstance();
+
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
 
             builder.RegisterAssemblyTypes(assembly).AsImplementedInterfaces()

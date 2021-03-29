@@ -43,5 +43,7 @@ namespace Business.Constant
         public static string AccessTokenCreated = "Token oluşturuldu";
         public static string AuthorizationDenied = "Yetki yok";
         public static string SuccessfullyPaid = "Ödeme Başarılı";
+        public static string CreditCardAdded = "Kart eklendi";
+        public static string CreditCardDeleted = "Kart silindi";
     }
 }
