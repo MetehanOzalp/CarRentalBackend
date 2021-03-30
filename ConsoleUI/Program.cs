@@ -21,25 +21,25 @@ namespace ConsoleUI
         private static void CustomerTest()
         {
             CustomerManager customerManager = new CustomerManager(new EfCustomerDal());
-            var result = customerManager.Add(new Customer { UserId = 2, CompanyName = "X sirketi"});
+            var result = customerManager.Add(new Customer { UserId = 2, CompanyName = "X sirketi" });
             Console.WriteLine(result.Message);
         }
 
         private static void RentalTest()
         {
-            RentalManager rentalManager = new RentalManager(new EfRentalDal());
-            var result = rentalManager.GetRentalDetails(1001);
-            if (result.Success)
-            {
-                foreach (var car in result.Data)
-                {
-                    Console.WriteLine(car.BrandName + car.UserName);
-                }
-            }
-            else
-            {
-                Console.WriteLine(result.Message);
-            }
+            //RentalManager rentalManager = new RentalManager(new EfRentalDal());
+            //var result = rentalManager.GetRentalDetails(1001);
+            //if (result.Success)
+            //{
+            //    foreach (var car in result.Data)
+            //    {
+            //        Console.WriteLine(car.BrandName + car.UserName);
+            //    }
+            //}
+            //else
+            //{
+            //    Console.WriteLine(result.Message);
+            //}
         }
 
         private static void UserTest()
@@ -60,7 +60,7 @@ namespace ConsoleUI
                 {
                     Console.WriteLine(brand.BrandName);
                 }
-            }           
+            }
         }
 
         private static void ColorTest()

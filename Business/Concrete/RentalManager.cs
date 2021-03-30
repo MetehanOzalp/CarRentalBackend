@@ -38,7 +38,7 @@ namespace Business.Concrete
                 return result;
             }
             _rentalDal.Add(rental);
-            return new SuccessResult(result.Message);
+            return new SuccessResult(Messages.RentalSuccessful);
         }
 
         public IResult CheckReturnDate(int carId)
@@ -108,8 +108,8 @@ namespace Business.Concrete
 
         public IResult CheckFindeksScore(int customerId, int carId)
         {
-            var customerFindeksScore = _customerService.GetById(customerId).Data.FindexsScore;
-            var carFindeksScore = _carService.GetCarById(carId).Data.MinFindexsScore;
+            var customerFindeksScore = _customerService.GetById(customerId).Data.FindeksScore;
+            var carFindeksScore = _carService.GetCarById(carId).Data.MinFindeksScore;
 
             if (customerFindeksScore < carFindeksScore)
             {
