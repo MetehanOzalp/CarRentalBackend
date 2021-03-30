@@ -23,7 +23,8 @@ namespace DataAccess.Concrete.EntityFramework
                                  Id = customer.Id,
                                  Name = user.FirstName + " " + user.LastName,
                                  Email = user.Email,
-                                 CompanyName = customer.CompanyName
+                                 CompanyName = customer.CompanyName,
+                                 FindexsScore = customer.FindexsScore
                              };
                 return result.ToList();
             }

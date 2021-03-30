@@ -3,6 +3,7 @@ using Business.Constant;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Validation;
+using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -17,19 +18,24 @@ namespace Business.Concrete
     public class RentalManager : IRentalService
     {
         IRentalDal _rentalDal;
+        ICarService _carService;
+        ICustomerService _customerService;
 
-        public RentalManager(IRentalDal rentalDal)
+        public RentalManager(IRentalDal rentalDal, ICarService carService, ICustomerService customerService)
         {
             _rentalDal = rentalDal;
+            _carService = carService;
+            _customerService = customerService;
         }
 
         [ValidationAspect(typeof(RentalValidator))]
         public IResult Add(Rental rental)
         {
-            var result = CheckReturnDate(rental.CarId);
-            if (!result.Success)
+            var result = BusinessRules.Run(CheckReturnDate(rental.CarId), CheckFindeksScore(rental.CustomerId, rental.CarId));
+            //var result = CheckReturnDate(rental.CarId);
+            if (result != null)
             {
-                return new ErrorResult(result.Message);
+                return result;
             }
             _rentalDal.Add(rental);
             return new SuccessResult(result.Message);
@@ -97,6 +103,19 @@ namespace Business.Concrete
             }
             updatedRental.ReturnDate = DateTime.Now;
             _rentalDal.Update(updatedRental);
+            return new SuccessResult();
+        }
+
+        public IResult CheckFindeksScore(int customerId, int carId)
+        {
+            var customerFindeksScore = _customerService.GetById(customerId).Data.FindexsScore;
+            var carFindeksScore = _carService.GetCarById(carId).Data.MinFindexsScore;
+
+            if (customerFindeksScore < carFindeksScore)
+            {
+                return new ErrorResult(Messages.NotEnoughFindeksScore);
+            }
+
             return new SuccessResult();
         }
     }
