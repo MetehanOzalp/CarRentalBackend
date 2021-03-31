@@ -32,12 +32,12 @@ namespace Business.Concrete
         public IResult Add(Rental rental)
         {
             var result = BusinessRules.Run(CheckReturnDate(rental.CarId), CheckFindeksScore(rental.CustomerId, rental.CarId));
-            //var result = CheckReturnDate(rental.CarId);
             if (result != null)
             {
                 return result;
             }
             _rentalDal.Add(rental);
+            IncreasingFindeksScore(rental.CustomerId);
             return new SuccessResult(Messages.RentalSuccessful);
         }
 
@@ -116,6 +116,17 @@ namespace Business.Concrete
                 return new ErrorResult(Messages.NotEnoughFindeksScore);
             }
 
+            return new SuccessResult();
+        }
+
+        public IResult IncreasingFindeksScore(int customerId)
+        {
+            var customer = _customerService.GetById(customerId).Data;
+            if (customer.FindeksScore <= 1880)
+            {
+                customer.FindeksScore += 20;
+                _customerService.Update(customer);
+            }
             return new SuccessResult();
         }
     }

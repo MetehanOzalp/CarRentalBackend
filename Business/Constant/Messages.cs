@@ -47,5 +47,7 @@ namespace Business.Constant
         public static string CreditCardDeleted = "Kart silindi";
         public static string NotEnoughFindeksScore = "Findeks puanı yetersiz";
         public static string RentalSuccessful = "Kiralama başarılı";
+        public static string CardAlreadyExists = "Kart zaten kayıtlı";
+        public static string CardAdded = "Kart eklendi";
     }
 }
