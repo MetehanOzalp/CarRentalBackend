@@ -11,6 +11,7 @@ using Entities.DTOs;
 using FluentValidation;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Business.Concrete
@@ -31,7 +32,7 @@ namespace Business.Concrete
         [ValidationAspect(typeof(RentalValidator))]
         public IResult Add(Rental rental)
         {
-            var result = BusinessRules.Run(CheckReturnDate(rental.CarId), CheckFindeksScore(rental.CustomerId, rental.CarId));
+            var result = BusinessRules.Run(CheckReturnDate(rental.CarId), RentalCheck(rental), CheckFindeksScore(rental.CustomerId, rental.CarId));
             if (result != null)
             {
                 return result;
@@ -103,6 +104,16 @@ namespace Business.Concrete
             }
             updatedRental.ReturnDate = DateTime.Now;
             _rentalDal.Update(updatedRental);
+            return new SuccessResult();
+        }
+
+        public IResult RentalCheck(Rental rental)
+        {
+            var result = _rentalDal.GetAll(r => r.CarId == rental.CarId && (r.RentDate >= rental.RentDate || r.ReturnDate <= rental.ReturnDate)).Any();
+            if (result)
+            {
+                return new ErrorResult(Messages.NotAvailable);
+            }
             return new SuccessResult();
         }
 
