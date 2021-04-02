@@ -109,7 +109,9 @@ namespace Business.Concrete
 
         public IResult RentalCheck(Rental rental)
         {
-            var result = _rentalDal.GetAll(r => r.CarId == rental.CarId && (r.RentDate >= rental.RentDate || r.ReturnDate <= rental.ReturnDate)).Any();
+            var result = _rentalDal.GetAll(r => r.CarId == rental.CarId && (
+            (rental.RentDate >= r.RentDate && rental.RentDate <= r.ReturnDate) ||
+            (rental.ReturnDate >= r.RentDate && rental.ReturnDate <= r.ReturnDate))).Any();
             if (result)
             {
                 return new ErrorResult(Messages.NotAvailable);
