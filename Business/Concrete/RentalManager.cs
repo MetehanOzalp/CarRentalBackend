@@ -116,6 +116,13 @@ namespace Business.Concrete
             {
                 return new ErrorResult(Messages.NotAvailable);
             }
+
+            var customerFindeks = _customerService.GetById(rental.CustomerId).Data.FindeksScore;
+            var carFindeks = _carService.GetCarById(rental.CarId).Data.MinFindeksScore;
+            if (customerFindeks < carFindeks)
+            {
+                return new ErrorResult(Messages.NotEnoughFindeksScore);
+            }
             return new SuccessResult();
         }
 
