@@ -7,11 +7,14 @@ namespace Entities.Concrete
 {
     public class Payment : IEntity
     {
-        public int PaymentId { get; set; }
+        public int Id { get; set; }
+        public int CustomerId { get; set; }
+        public int CarId { get; set; }
         public string CardNumber { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string ExpirationDate { get; set; }
         public int CVV { get; set; }
+        public int Amount { get; set; }
     }
 }
