@@ -32,7 +32,7 @@ namespace Business.Concrete
         [ValidationAspect(typeof(RentalValidator))]
         public IResult Add(Rental rental)
         {
-            var result = BusinessRules.Run(CheckReturnDate(rental.CarId), RentalCheck(rental), CheckFindeksScore(rental.CustomerId, rental.CarId));
+            var result = BusinessRules.Run(CheckReturnDate(rental.CarId), RentalCheck(rental), CheckFindeksScore(rental));
             if (result != null)
             {
                 return result;
@@ -116,20 +116,13 @@ namespace Business.Concrete
             {
                 return new ErrorResult(Messages.NotAvailable);
             }
-
-            var customerFindeks = _customerService.GetById(rental.CustomerId).Data.FindeksScore;
-            var carFindeks = _carService.GetCarById(rental.CarId).Data.MinFindeksScore;
-            if (customerFindeks < carFindeks)
-            {
-                return new ErrorResult(Messages.NotEnoughFindeksScore);
-            }
             return new SuccessResult();
         }
 
-        public IResult CheckFindeksScore(int customerId, int carId)
+        public IResult CheckFindeksScore(Rental rental)
         {
-            var customerFindeksScore = _customerService.GetById(customerId).Data.FindeksScore;
-            var carFindeksScore = _carService.GetCarById(carId).Data.MinFindeksScore;
+            var customerFindeksScore = _customerService.GetById(rental.CustomerId).Data.FindeksScore;
+            var carFindeksScore = _carService.GetCarById(rental.CarId).Data.MinFindeksScore;
 
             if (customerFindeksScore < carFindeksScore)
             {

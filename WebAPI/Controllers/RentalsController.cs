@@ -119,10 +119,21 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
-        [HttpPost("isRentable")]
+        [HttpPost("isrentable")]
         public IActionResult IsRentable(Rental rental)
         {
             var result = _rentalService.RentalCheck(rental);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+        [HttpPost("checkfindeksscore")]
+        public IActionResult CheckFindeksScore(Rental rental)
+        {
+            var result = _rentalService.CheckFindeksScore(rental);
             if (result.Success)
             {
                 return Ok(result);

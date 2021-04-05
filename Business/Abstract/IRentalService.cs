@@ -20,5 +20,6 @@ namespace Business.Abstract
         IResult CheckReturnDate(int carId);
         IResult UpdateReturnDate(int carId);
         IResult RentalCheck(Rental rental);
+        IResult CheckFindeksScore(Rental rental);
     }
 }
