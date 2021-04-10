@@ -49,5 +49,7 @@ namespace Business.Constant
         public static string RentalSuccessful = "Kiralama başarılı";
         public static string CardAlreadyExists = "Kart zaten kayıtlı";
         public static string NotAvailable = "Bu tarihler arasında kiralanamaz";
+        public static string BrandAlreadyExists = "Marka zaten mevcut";
+        public static string ColorAlreadyExists = "Renk zaten mevcut";
     }
 }
