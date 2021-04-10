@@ -6,6 +6,7 @@ using DataAccess.Abstract;
 using Entities.Concrete;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Business.Concrete
@@ -43,13 +44,10 @@ namespace Business.Concrete
 
         public IResult CheckIfCard(CreditCard creditCard)
         {
-            var CreditCards = _creditCardDal.GetAll();
-            foreach (var card in CreditCards)
+            var result = _creditCardDal.GetAll(c => c.CardNumber == creditCard.CardNumber).Any();
+            if (result)
             {
-                if (card.CardNumber == creditCard.CardNumber)
-                {
-                    return new ErrorResult(Messages.CardAlreadyExists);
-                }
+                return new ErrorResult(Messages.CardAlreadyExists);
             }
             return new SuccessResult();
         }
