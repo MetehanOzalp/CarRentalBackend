@@ -60,7 +60,7 @@ namespace Business.Concrete
 
         public IResult Update(UserForUpdateDto userForUpdateDto)
         {
-            var user = _userDal.Get(u => u.Email == userForUpdateDto.Email);
+            var user = _userDal.Get(u => u.Id == userForUpdateDto.Id);
             byte[] passwordHash, passwordSalt;
             HashingHelper.CreatePasswordHash(userForUpdateDto.Password, out passwordHash, out passwordSalt);
             user = new User
