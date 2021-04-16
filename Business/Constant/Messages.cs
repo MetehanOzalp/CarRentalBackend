@@ -51,5 +51,6 @@ namespace Business.Constant
         public static string NotAvailable = "Bu tarihler arasında kiralanamaz";
         public static string BrandAlreadyExists = "Marka zaten mevcut";
         public static string ColorAlreadyExists = "Renk zaten mevcut";
+        public static string CarImageAdded = "Resim eklendi";
     }
 }

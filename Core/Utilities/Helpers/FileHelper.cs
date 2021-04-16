@@ -47,16 +47,8 @@ namespace Core.Utilities.FileHelper
 
         public static string Update(string sourcePath, IFormFile file)
         {
-            var result = newPath(file);
-            if (sourcePath.Length > 0)
-            {
-                using (var stream = new FileStream(sourcePath, FileMode.Create))
-                {
-                    file.CopyTo(stream);
-                }
-            }
-
-            return result;
+            Delete(sourcePath);
+            return Add(file);
         }
 
         public static string newPath(IFormFile file)
