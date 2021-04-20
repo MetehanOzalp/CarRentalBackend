@@ -12,7 +12,7 @@ namespace Business.Abstract
         IDataResult<List<CarImage>> GetAllImages();
         IDataResult<List<CarImage>> GetImagesByCarId(int carId);
         IDataResult<CarImage> Get(int carId);
-        IResult Add(IFormFile file, CarImage carImage);
+        IResult Add(IFormFile[] file, CarImage carImage);
         IResult Delete(CarImage carImage);
         IResult Update(IFormFile file, CarImage carImage);
     }

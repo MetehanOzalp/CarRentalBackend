@@ -25,16 +25,22 @@ namespace Business.Concrete
         }
 
         //[ValidationAspect(typeof(CarImageValidator))]
-        public IResult Add(IFormFile file, CarImage carImage)
+        public IResult Add(IFormFile[] file, CarImage carImage)
         {
-            IResult result = BusinessRules.Run(CheckCarImageLimit(carImage.CarId));
-            if (result != null)
+            //IResult result = BusinessRules.Run(CheckCarImageLimit(carImage.CarId));
+            //if (result != null)
+            //{
+            //    return result;
+            //}
+            foreach (var image in file)
             {
-                return result;
+                carImage.ImagePath = FileHelper.Add(image);
+                carImage.Date = DateTime.Now;
+                carImage.Id = 0;
+                _carImageDal.Add(carImage);
+
             }
-            carImage.ImagePath = FileHelper.Add(file);
-            carImage.Date = DateTime.Now;
-            _carImageDal.Add(carImage);
+
             return new SuccessResult(Messages.CarImageAdded);
         }
 
