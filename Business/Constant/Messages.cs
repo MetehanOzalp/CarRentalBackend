@@ -52,5 +52,6 @@ namespace Business.Constant
         public static string BrandAlreadyExists = "Marka zaten mevcut";
         public static string ColorAlreadyExists = "Renk zaten mevcut";
         public static string CarImageAdded = "Resim eklendi";
+        public static string ClaimAlreadyExists = "Kullanıcı bu yetkiye zaten sahip";
     }
 }
